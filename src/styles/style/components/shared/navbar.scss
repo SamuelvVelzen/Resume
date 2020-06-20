@@ -1,9 +1,14 @@
+@import './../../utilities/variables.scss';
+
 #navbar {
     position: sticky;
     top: 0;
 
     display: flex;
-    padding: 14px 0;
+    align-items: center;
+
+    transition: padding 0.5s;
+    padding: 14px $desktop_spacing;
 
     .description {
         font-weight: bold;
@@ -11,12 +16,24 @@
         margin-right: auto;
     }
 
-    .link {
-        cursor: pointer;
-
+    .btn_link {
+        transition: margin 0.5s;
         margin-right: 5%;
+    }
+}
 
-        border: none;
-        background-color: white;
+@media only screen and (max-width: $tablet) {
+    #navbar {
+        padding: 14px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    #navbar {
+        padding: 14px $mobile_spacing;
+
+        .btn_link {
+            margin-right: 3%;
+        }
     }
 }
