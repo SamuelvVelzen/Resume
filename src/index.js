@@ -5,7 +5,7 @@ import App from './components/app';
 
 import { ThemeContext, themes } from './logics/theme-context';
 
-import './styles/style/index.css';
+import './styles/style/index.scss';
 
 function Index() {
     const [theme, setTheme] = useState(themes.light);

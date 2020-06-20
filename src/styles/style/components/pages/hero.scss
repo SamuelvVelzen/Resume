@@ -1,0 +1,44 @@
+@import './../../utilities/variables.scss';
+#hero {
+    padding: 14px $desktop_spacing;
+
+    display: flex;
+
+    position: relative;
+
+    section {
+        width: 50%;
+        align-self: center;
+    }
+
+    .heroimage {
+        width: 50%;
+
+        height: 100%;
+        background-color: black;
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    #hero {
+        padding: 14px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    #hero {
+        padding: 14px $mobile_spacing;
+
+        section {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .heroimage {
+            width: 100%;
+            height: 50%;
+        }
+    }
+}
