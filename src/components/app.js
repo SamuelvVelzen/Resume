@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ThemeButton from './shared/buttons';
+import Navbar from './shared/navbar';
 
 export default function App() {
-    return <ThemeButton />;
+    return <Navbar />;
 }

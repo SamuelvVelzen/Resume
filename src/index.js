@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 
 import { ThemeContext, themes } from './logics/theme-context';
-import ThemeButton from './components/shared/buttons';
+
+import './styles/style/index.css';
 
 function Index() {
     const [theme, setTheme] = useState(themes.light);
@@ -15,7 +16,7 @@ function Index() {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <ThemeButton />
+            <App />
         </ThemeContext.Provider>
     );
 }
