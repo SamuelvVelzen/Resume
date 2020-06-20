@@ -1,7 +1,7 @@
 @import './../../utilities/variables.scss';
 
 #hero {
-    padding: 14px $desktop_spacing;
+    padding: 50px $desktop_spacing;
 
     display: flex;
 
@@ -22,13 +22,13 @@
 
 @media only screen and (max-width: $tablet) {
     #hero {
-        padding: 14px $tablet_spacing;
+        padding: 50px $tablet_spacing;
     }
 }
 
 @media only screen and (max-width: $mobile) {
     #hero {
-        padding: 14px $mobile_spacing;
+        padding: 50px $mobile_spacing;
 
         section {
             position: absolute;
