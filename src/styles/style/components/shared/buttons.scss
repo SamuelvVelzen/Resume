@@ -1,0 +1,32 @@
+.btn {
+    cursor: pointer;
+    border: none;
+
+    &_theme {
+        height: 30px;
+        width: 30px;
+
+        background-position: center;
+        background-size: 30px;
+        transition: transform 0.5s;
+
+        &.light {
+            background-image: url('./../../../images/icons/light.png');
+        }
+
+        &.dark {
+            background-image: url('./../../../images/icons/dark.png');
+            transform: rotate(180deg);
+        }
+
+        &:active {
+            color: initial;
+        }
+    }
+
+    &_link {
+        &:active {
+            color: initial;
+        }
+    }
+}
