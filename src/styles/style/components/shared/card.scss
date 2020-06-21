@@ -1,0 +1,24 @@
+.card {
+    border-radius: 15px;
+    margin-bottom: 35px;
+
+    position: relative;
+
+    &_image {
+        width: 100%;
+    }
+
+    &_textbox {
+        position: absolute;
+        left: 5%;
+        bottom: 5%;
+
+        &.white {
+            color: white;
+        }
+
+        &.dark {
+            color: black;
+        }
+    }
+}

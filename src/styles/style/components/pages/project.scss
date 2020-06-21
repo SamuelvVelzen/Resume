@@ -1,0 +1,64 @@
+@import './../../utilities/variables.scss';
+
+#project {
+    padding: 50px $desktop_spacing;
+
+    .pillsGroup {
+        .pill {
+            margin-bottom: 15px;
+        }
+    }
+
+    .cardsGroup {
+        display: flex;
+        flex-wrap: wrap;
+
+        flex-direction: row;
+
+        .card {
+            width: 45%;
+
+            &:nth-child(odd) {
+                margin-right: 10%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    #project {
+        padding: 50px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    #project {
+        padding: 50px $mobile_spacing;
+
+        .pillsGroup {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 25px 0 10px 0;
+
+            .pill {
+                margin-bottom: 15px;
+            }
+        }
+
+        .cardsGroup {
+            display: flex;
+            flex-wrap: wrap;
+
+            flex-direction: row;
+
+            .card {
+                width: 100%;
+
+                &:nth-child(odd) {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
