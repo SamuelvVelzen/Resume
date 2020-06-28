@@ -1,40 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeContext } from '../../logics/theme-context';
 import Card from './../shared/card';
 
 import './../../styles/style/components/pages/project.scss';
 
-import Vicrea from './../../styles/images/content/hero.png';
 import Pill from '../shared/pill';
 
-const requiredKeys = ['image', 'tags', 'textColor', 'description'],
-    projects = {
-        Vicrea: {
-            image: Vicrea,
-            textColor: 'white',
-            tags: ['HTML', 'CSS', 'JavaScript', 'Gulp'],
-            description: 'lorem test lalalal allalals sdks a hoie soa;',
-        },
-        Indivirtual: {
-            image: Vicrea,
-            textColor: 'white',
-            tags: ['C#', 'HTML', 'SCSS', 'ReactJS'],
-            description: 'lorem test lalalal allalals sdks a hoie soa;',
-        },
-        Test: {
-            image: Vicrea,
-            textColor: 'white',
-            tags: ['C#', 'HTML', 'SCSS'],
-            description: 'lorem test lalalal allalals sdks a hoie soa;',
-        },
-    };
+import { projects, requiredKeys, allowedColors } from './../../config/projects';
 
-function checkRequiredKeys(obj) {
+function checkRequired(obj, tagsObj) {
+    const total = Object.keys(tagsObj).length,
+        length = 179;
+
     for (let key in obj) {
         // skip loop if the property is from prototype
+
         if (!obj.hasOwnProperty(key)) continue;
+
+        const description = obj[key].description.length;
         let valKey;
 
+        //check if every projects contains the require keys
         if (
             !requiredKeys.every((val) => {
                 valKey = val;
@@ -43,155 +29,212 @@ function checkRequiredKeys(obj) {
         ) {
             console.error(`${key} is missing the prop: ${valKey}`);
         }
-    }
-}
 
-function calculateTags(obj) {
-    let tagsObj = {};
-
-    for (var key in obj) {
-        // skip loop if the property is from prototype
-        if (!obj.hasOwnProperty(key)) continue;
-
-        var propKey = obj[key];
-
-        for (var prop in propKey) {
-            // skip loop if the property is from prototype
-            if (prop === 'tags') {
-                propKey[prop].forEach((element) => {
-                    if (element in tagsObj) {
-                        tagsObj[element].count += 1;
-                    } else {
-                        tagsObj[element] = {
-                            count: 1,
-                            activeColor: 'blue',
-                        };
-                    }
-                });
-            }
+        //check if description isn't too big
+        if (description > length) {
+            console.error(
+                `Description is ${description}, but max size is 179, but the description is ${
+                    description - length
+                } characters too big`
+            );
         }
     }
 
-    return tagsObj;
-}
-
-function calculatePills(obj) {
-    const tagsObj = calculateTags(obj),
-        total = Object.keys(obj).length;
-
-    let pills = [];
-
-    pills.push(<Pill id="All" key="All" label="All" total={total} />);
-
-    for (var pillItem in tagsObj) {
-        pills.push(
-            <Pill
-                id={pillItem}
-                key={pillItem}
-                label={pillItem}
-                total={tagsObj[pillItem].count}
-                color={tagsObj[pillItem].activeColor}
-            />
+    //check if enough colors are available
+    if (allowedColors.length < total) {
+        console.error(
+            `Only ${allowedColors.length} colors available while the application needs ${total}`
         );
     }
-
-    return pills;
 }
 
-function calculateCards(filter, obj) {
-    let cards = [];
+export default function Project() {
+    //functions
+    let filterCards, calculatePills, calculateTags, calculateCards, checkFilter;
 
-    for (let key in obj) {
-        // skip loop if the property is from prototype
-        if (!obj.hasOwnProperty(key)) continue;
+    calculateTags = (obj) => {
+        let tagsObj = {};
+        let index = 0;
 
-        let propKey = obj[key];
+        for (let key in obj) {
+            let loopIndex = index;
+            // skip loop if the property is from prototype
+            if (!obj.hasOwnProperty(key)) continue;
 
-        if (filter.length === 0) {
-            cards.push(
-                <Card
-                    key={key}
-                    title={key}
-                    img={propKey['image']}
-                    textColor={propKey['textColor']}
-                    tags={propKey['tags']}
-                    desc={propKey['description']}
+            const propKey = obj[key];
+
+            propKey.tags.forEach((element) => {
+                if (element in tagsObj) {
+                    tagsObj[element].count += 1;
+                } else {
+                    tagsObj[element] = {
+                        count: 1,
+                        activeColor: allowedColors[loopIndex],
+                    };
+
+                    loopIndex++;
+                }
+            });
+
+            index = loopIndex;
+        }
+
+        return tagsObj;
+    };
+
+    calculatePills = (obj, tagsObj, filter = []) => {
+        const total = Object.keys(obj).length;
+
+        let pills = [];
+
+        pills.push(
+            <Pill
+                id="All"
+                class={filter.length === 0 ? 'active' : null}
+                key="All"
+                label="All"
+                total={total}
+                color="black"
+            />
+        );
+
+        for (var pillItem in tagsObj) {
+            pills.push(
+                <Pill
+                    id={pillItem}
+                    class={filter.includes(pillItem) ? 'active' : null}
+                    key={pillItem}
+                    label={pillItem}
+                    total={tagsObj[pillItem].count}
+                    color={tagsObj[pillItem].activeColor}
                 />
             );
-        } else {
-            cards.push(checkFilter(propKey, filter, key));
         }
-    }
 
-    return cards;
-}
+        return pills;
+    };
 
-function checkFilter(propKey, filter, key) {
-    for (let j = 0; j < propKey['tags'].length; j++) {
-        for (let i = 0; i < filter.length; i++) {
-            if (propKey['tags'][j] === filter[i]) {
-                return (
+    calculateCards = (filter, obj, tagsObj) => {
+        let cards = [];
+
+        for (let key in obj) {
+            // skip loop if the property is from prototype
+            if (!obj.hasOwnProperty(key)) continue;
+
+            let propKey = obj[key];
+
+            if (filter.length === 0) {
+                cards.push(
                     <Card
                         key={key}
                         title={key}
                         img={propKey['image']}
                         textColor={propKey['textColor']}
+                        tagsObj={tagsObj}
                         tags={propKey['tags']}
                         desc={propKey['description']}
                     />
                 );
+            } else {
+                cards.push(checkFilter(propKey, filter, key, tagsObj));
             }
         }
-    }
-}
 
-export default function Project() {
-    const [filter, setFilter] = useState([]),
-        [cards, setCards] = useState(calculateCards(filter, projects));
+        return cards;
+    };
 
-    const pills = calculatePills(projects);
+    filterCards = (event) => {
+        let el, tag, tagAll, inFilter, existFilter;
 
-    const filterCards = (event) => {
-        let el = event.target,
-            existArr = false;
-
-        if (el.parentNode.classList.contains('pill')) {
-            el = el.parentNode;
+        //1. get tag
+        if (event.target.parentNode.classList.contains('pill')) {
+            el = event.target.parentNode;
+        } else {
+            el = event.target;
         }
 
-        if (el.classList.contains('pill')) {
-            if (el.id === 'All') {
-                setFilter([]);
-                setCards(calculateCards([], projects));
-                return;
-            }
+        if (el.id === 'All') {
+            tag = 'All';
+            tagAll = true;
+        } else {
+            tag = el.id;
+            tagAll = false;
+        }
 
-            filter.forEach((element) => {
-                if (element === el.id) {
-                    existArr = true;
+        //2. get filter
+        existFilter = filter;
 
-                    let arr = filter;
-                    arr = arr.filter((item) => item !== el.id);
+        if (tagAll) {
+            existFilter = [];
+        } else {
+            //3. check if tag already exist in filter
+            for (let i = 0; i < existFilter.length; i++) {
+                const element = existFilter[i];
 
-                    setFilter(arr);
-                    setCards(calculateCards(arr, projects));
-                    return;
+                if (element === tag) {
+                    existFilter = existFilter.filter((item) => item !== tag);
+
+                    inFilter = true;
+
+                    break;
                 }
-            });
 
-            if (!existArr) {
-                filter.push(el.id);
+                inFilter = false;
+            }
 
-                setFilter(filter);
-                setCards(calculateCards(filter, projects));
-                return;
+            if (!inFilter) {
+                existFilter.push(tag);
+            }
+        }
+        //4. add or remove active state to tag
+        console.log(existFilter);
+
+        //5. update filter
+        setFilter(existFilter);
+
+        //6. update pills
+        setPills(calculatePills(projects, tagsObj, existFilter));
+
+        //7. update cards
+        setCards(calculateCards(existFilter, projects, tagsObj));
+    };
+
+    checkFilter = (propKey, filter, key, tagsObj) => {
+        for (let j = 0; j < propKey['tags'].length; j++) {
+            for (let i = 0; i < filter.length; i++) {
+                if (propKey['tags'][j] === filter[i]) {
+                    return (
+                        <Card
+                            key={key}
+                            title={key}
+                            img={propKey['image']}
+                            textColor={propKey['textColor']}
+                            tagsObj={tagsObj}
+                            tags={propKey['tags']}
+                            desc={propKey['description']}
+                        />
+                    );
+                }
             }
         }
     };
 
-    console.log(filter);
+    //1. generate tags object
+    const tagsObj = calculateTags(projects);
 
-    checkRequiredKeys(projects);
+    //2. check if info is correct: enough colors, description not too big or if all required tags are present
+    checkRequired(projects, tagsObj);
+
+    //3.generate pills
+    const [pills, setPills] = useState(calculatePills(projects, tagsObj));
+
+    //4. filter
+    const [filter, setFilter] = useState([]);
+
+    //5. generate cards
+    const [cards, setCards] = useState(
+        calculateCards(filter, projects, tagsObj)
+    );
 
     return (
         <ThemeContext.Consumer>
