@@ -29,7 +29,15 @@ export default function Navbar() {
                             color: theme.style === 'dark' ? theme.white : null,
                         }}
                     >
-                        Introduction
+                        <span
+                            className={
+                                theme.style === 'dark'
+                                    ? 'hover inline ' + theme.style
+                                    : 'hover inline'
+                            }
+                        >
+                            Introduction
+                        </span>
                     </button>
                     <button
                         className="btn btn_link"
@@ -38,7 +46,15 @@ export default function Navbar() {
                             color: theme.style === 'dark' ? theme.white : null,
                         }}
                     >
-                        Projects
+                        <span
+                            className={
+                                theme.style === 'dark'
+                                    ? 'hover inline ' + theme.style
+                                    : 'hover inline'
+                            }
+                        >
+                            Projects
+                        </span>
                     </button>
                     <ThemeButton />
                 </div>
