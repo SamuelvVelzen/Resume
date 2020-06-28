@@ -1,0 +1,119 @@
+@import './../../utilities/variables.scss';
+
+#contact {
+    color: $white;
+    background-color: $primary;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    padding: 50px $desktop_spacing;
+
+    text-align: center;
+
+    .icon {
+        padding-right: 10%;
+    }
+
+    .github .icon {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+
+        background-image: url('./../../../images/icons/github.png');
+        background-size: 40px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .email .icon {
+        font-size: 50px;
+    }
+    .linkedin .icon {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+
+        background-image: url('./../../../images/icons/linkedin.png');
+        background-size: 40px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .github,
+    .email,
+    .linkedin {
+        text-decoration: none;
+        color: $white;
+
+        background-color: transparent;
+
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        .hover {
+            transition: all 0.3s;
+            position: relative;
+            &:before,
+            &:after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                width: 0px;
+                height: 5px;
+                margin: 5px 0 0;
+                transition: all 0.3s;
+
+                opacity: 0;
+                background-color: darken($white, 5%);
+            }
+
+            &.inline {
+                &:before {
+                    left: 50%;
+                }
+                &:after {
+                    right: 50%;
+                }
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+            .hover {
+                &:before,
+                &:after {
+                    width: 100%;
+                    opacity: 1;
+                }
+                &.inline {
+                    &:before,
+                    &:after {
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    #contact {
+        padding: 50px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    #contact {
+        padding: 50px $mobile_spacing;
+
+        flex-direction: column;
+        align-items: center;
+
+        .github,
+        .email {
+            margin-bottom: $mobile_spacing;
+        }
+    }
+}
