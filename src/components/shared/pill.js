@@ -3,11 +3,18 @@ import React from 'react';
 import './../../styles/style/components/shared/pill.scss';
 
 export default function Pill(props) {
+    const checkActive = () => {
+        if (props.class || props.class === 'active') {
+            return props.color;
+        }
+        return null;
+    };
+
     return (
         <span
             id={props.id}
-            className="pill"
-            style={{ backgroundColor: props.active ? props.color : null }}
+            className={props.class ? 'pill ' + props.class : 'pill'}
+            style={{ backgroundColor: checkActive() }}
         >
             {props.label}{' '}
             {props.total ? (
