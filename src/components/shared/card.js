@@ -3,18 +3,39 @@ import React from 'react';
 import './../../styles/style/components/shared/card.scss';
 import Pill from './pill';
 
-function generateTags(arr) {
+function generateTags(tags, tagsObj) {
     let pills = [];
 
-    arr.forEach((element, index) => {
+    tags.forEach((element, index) => {
         if (index < 2) {
-            pills.push(<Pill key={element} label={element} />);
+            pills.push(
+                <Pill
+                    key={element}
+                    label={element}
+                    class="active"
+                    color={tagsObj[element].activeColor}
+                />
+            );
         }
 
-        if (arr.length > 3 && index === 2) {
-            pills.push(<Pill key={element} label={element + '...'} />);
+        if (tags.length > 3 && index === 2) {
+            pills.push(
+                <Pill
+                    key={element}
+                    label={element + '...'}
+                    class="active"
+                    color={tagsObj[element].activeColor}
+                />
+            );
         } else if (index === 2) {
-            pills.push(<Pill key={element} label={element} />);
+            pills.push(
+                <Pill
+                    key={element}
+                    label={element}
+                    class="active"
+                    color={tagsObj[element].activeColor}
+                />
+            );
         }
     });
 
@@ -22,7 +43,7 @@ function generateTags(arr) {
 }
 
 export default function Card(props) {
-    const tags = generateTags(props.tags);
+    const tags = generateTags(props.tags, props.tagsObj);
 
     return (
         <div className="card">
