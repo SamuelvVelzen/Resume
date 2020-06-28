@@ -4,7 +4,7 @@
     display: inline-block;
     background-color: white;
     color: black;
-    padding: 5px;
+    padding: 5px 10px;
 
     outline: none;
     border: none;
@@ -14,5 +14,13 @@
 
     .total {
         font-weight: bolder;
+    }
+
+    &:not(.active):hover {
+        opacity: 0.8;
+    }
+
+    &.active {
+        color: white;
     }
 }
