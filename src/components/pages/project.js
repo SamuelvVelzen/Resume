@@ -146,6 +146,9 @@ export default function Project() {
     filterCards = (event) => {
         let el, tag, tagAll, inFilter, existFilter;
 
+        //check if target is not the div that contains the pills
+        if (event.target.classList.contains('pillsGroup')) return;
+
         //1. get tag
         if (event.target.parentNode.classList.contains('pill')) {
             el = event.target.parentNode;
