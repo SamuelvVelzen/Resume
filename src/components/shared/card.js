@@ -6,6 +6,8 @@ import Pill from './pill';
 function generateTags(tags, tagsObj) {
     let pills = [];
 
+    tags.sort();
+
     tags.forEach((element, index) => {
         if (index < 2) {
             pills.push(

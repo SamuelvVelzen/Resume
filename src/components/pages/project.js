@@ -53,7 +53,8 @@ export default function Project() {
     let filterCards, calculatePills, calculateTags, calculateCards, checkFilter;
 
     calculateTags = (obj) => {
-        let tagsObj = {};
+        let tagsObjUnSort = {},
+            tagsObjSort = {};
         let index = 0;
 
         for (let key in obj) {
@@ -64,10 +65,10 @@ export default function Project() {
             const propKey = obj[key];
 
             propKey.tags.forEach((element) => {
-                if (element in tagsObj) {
-                    tagsObj[element].count += 1;
+                if (element in tagsObjUnSort) {
+                    tagsObjUnSort[element].count += 1;
                 } else {
-                    tagsObj[element] = {
+                    tagsObjUnSort[element] = {
                         count: 1,
                         activeColor: allowedColors[loopIndex],
                     };
@@ -79,7 +80,13 @@ export default function Project() {
             index = loopIndex;
         }
 
-        return tagsObj;
+        Object.keys(tagsObjUnSort)
+            .sort()
+            .forEach(function (key) {
+                tagsObjSort[key] = tagsObjUnSort[key];
+            });
+
+        return tagsObjSort;
     };
 
     calculatePills = (obj, tagsObj, filter = []) => {
