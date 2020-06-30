@@ -7,6 +7,7 @@ import './../../styles/style/components/pages/project.scss';
 import Pill from '../shared/pill';
 
 import { projects, requiredKeys, allowedColors } from './../../config/projects';
+// import { } from './../../logics/filter';
 
 function checkRequired(obj, tagsObj) {
     const total = Object.keys(tagsObj).length,
@@ -49,22 +50,28 @@ function checkRequired(obj, tagsObj) {
 }
 
 export default function Project() {
+    console.log('project');
     //functions
-    let filterCards, calculatePills, calculateTags, calculateCards, checkFilter;
+    let filterCards,
+        calculatePills,
+        calculateTags,
+        calculateCards,
+        checkFilter,
+        checkTags;
 
-    calculateTags = (obj) => {
+    calculateTags = (filter = []) => {
         let tagsObjUnSort = {},
-            tagsObjSort = {};
-        let index = 0;
+            tagsObjSort = {},
+            index = 0;
 
-        for (let key in obj) {
-            let loopIndex = index;
+        for (let key in projects) {
             // skip loop if the property is from prototype
-            if (!obj.hasOwnProperty(key)) continue;
+            if (!projects.hasOwnProperty(key)) continue;
 
-            const propKey = obj[key];
+            const propKey = projects[key];
+            let loopIndex = index;
 
-            propKey.tags.forEach((element) => {
+            propKey['tags'].forEach((element) => {
                 if (element in tagsObjUnSort) {
                     tagsObjUnSort[element].count += 1;
                 } else {
@@ -89,10 +96,94 @@ export default function Project() {
         return tagsObjSort;
     };
 
-    calculatePills = (obj, tagsObj, filter = []) => {
-        const total = Object.keys(obj).length;
+    checkTags = (propKey, tempObj, index, filter) => {
+        let inFilter = false;
 
+        // first check if tag exist in filter
+        for (let i = 0; i < propKey['tags'].length; i++) {
+            const element = propKey['tags'][i];
+
+            if (filter.includes(element)) {
+                inFilter = true;
+            }
+        }
+
+        if (inFilter) {
+            //if not exist add to tempObj and return
+            propKey['tags'].forEach((element) => {
+                if (element in tempObj) {
+                    tempObj[element].count += 1;
+                } else {
+                    tempObj[element] = {
+                        count: 1,
+                        activeColor: allowedColors[index],
+                    };
+
+                    index++;
+                }
+            });
+        }
+
+        return { obj: tempObj, index: index };
+    };
+
+    calculatePills = (tagsObj, filter = []) => {
+        const total = Object.keys(projects).length;
         let pills = [];
+
+        if (filter.length !== 0) {
+            let index = 0,
+                filteredTagsObj = {};
+
+            for (let key in projects) {
+                // skip loop if the property is from prototype
+                if (!projects.hasOwnProperty(key)) continue;
+
+                const propKey = projects[key];
+                let loopIndex = index;
+
+                let filteredTagsObjs = checkTags(
+                    propKey,
+                    filteredTagsObj,
+                    loopIndex,
+                    filter
+                );
+
+                Object.assign(filteredTagsObj, filteredTagsObjs.obj);
+
+                index = filteredTagsObjs.index;
+            }
+
+            pills.push(
+                <Pill
+                    id="All"
+                    class={filter.length === 0 ? 'active' : null}
+                    key="All"
+                    label="All"
+                    total={total}
+                    color="black"
+                />
+            );
+
+            for (var pillItem in tagsObj) {
+                pills.push(
+                    <Pill
+                        id={pillItem}
+                        class={filter.includes(pillItem) ? 'active' : null}
+                        key={pillItem}
+                        label={pillItem}
+                        total={
+                            filteredTagsObj[pillItem]
+                                ? filteredTagsObj[pillItem].count
+                                : '0'
+                        }
+                        color={tagsObj[pillItem].activeColor}
+                    />
+                );
+            }
+
+            return pills;
+        }
 
         pills.push(
             <Pill
@@ -153,10 +244,10 @@ export default function Project() {
     filterCards = (event) => {
         let el, tag, tagAll, inFilter, existFilter;
 
-        //check if target is not the div that contains the pills
+        //1. check if target is not the div that contains the pills
         if (event.target.classList.contains('pillsGroup')) return;
 
-        //1. get tag
+        //2. get tag
         if (event.target.parentNode.classList.contains('pill')) {
             el = event.target.parentNode;
         } else {
@@ -169,15 +260,17 @@ export default function Project() {
         } else {
             tag = el.id;
             tagAll = false;
+
+            if (parseInt(el.children[0].innerText.split('')[1]) === 0) return;
         }
 
-        //2. get filter
+        //3. get filter
         existFilter = filter;
 
         if (tagAll) {
             existFilter = [];
         } else {
-            //3. check if tag already exist in filter
+            // check if tag already exist in filter
             for (let i = 0; i < existFilter.length; i++) {
                 const element = existFilter[i];
 
@@ -196,16 +289,14 @@ export default function Project() {
                 existFilter.push(tag);
             }
         }
-        //4. add or remove active state to tag
-        console.log(existFilter);
 
-        //5. update filter
+        //4. update filter
         setFilter(existFilter);
 
-        //6. update pills
-        setPills(calculatePills(projects, tagsObj, existFilter));
+        //5. update pills
+        setPills(calculatePills(tagsObj, existFilter));
 
-        //7. update cards
+        //6. update cards
         setCards(calculateCards(existFilter, projects, tagsObj));
     };
 
@@ -229,17 +320,16 @@ export default function Project() {
         }
     };
 
-    //1. generate tags object
-    const tagsObj = calculateTags(projects);
+    //1. filter
+    const [filter, setFilter] = useState([]),
+        //2. generate tags object
+        [tagsObj, setTagsObj] = useState(calculateTags(filter));
 
-    //2. check if info is correct: enough colors, description not too big or if all required tags are present
+    //3. check if info is correct: enough colors, description not too big or if all required tags are present
     checkRequired(projects, tagsObj);
 
-    //3.generate pills
-    const [pills, setPills] = useState(calculatePills(projects, tagsObj));
-
-    //4. filter
-    const [filter, setFilter] = useState([]);
+    //4.generate pills
+    const [pills, setPills] = useState(calculatePills(tagsObj));
 
     //5. generate cards
     const [cards, setCards] = useState(
