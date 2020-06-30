@@ -321,9 +321,10 @@ export default function Project() {
     };
 
     //1. filter
-    const [filter, setFilter] = useState([]),
-        //2. generate tags object
-        [tagsObj, setTagsObj] = useState(calculateTags(filter));
+    const [filter, setFilter] = useState([]);
+
+    //2. generate tags object
+    const tagsObj = calculateTags(filter);
 
     //3. check if info is correct: enough colors, description not too big or if all required tags are present
     checkRequired(projects, tagsObj);
