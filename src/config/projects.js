@@ -4,20 +4,20 @@ export const projects = {
         Vicrea: {
             image: Vicrea,
             textColor: 'white',
-            tags: ['HTML', 'CSS', 'JavaScript', 'Gulp'],
+            tags: ['Gulp'],
             description: 'lorem test lalalal allalals sdks a hoie soa;',
         },
         Indivirtual: {
             image: Vicrea,
             textColor: 'white',
-            tags: ['C#', 'HTML', 'SCSS', 'ReactJS'],
+            tags: ['HTML', 'SCSS', 'ReactJS'],
             description:
                 'lorem test lalalal allalals sdks a hoie soa; lorem test lalalal allalals sdks a hoie soa; lorem test lalalal allalals sdks a hoie soa; lorem test lalalal allalals sdks a hoie soa;',
         },
         Test: {
             image: Vicrea,
             textColor: 'white',
-            tags: ['C#', 'HTML', 'SCSS'],
+            tags: ['C#', 'HTML', 'SCSS', 'ReactJS'],
             description: 'lorem test lalalal allalals sdks a hoie soa;',
         },
     },
