@@ -4,7 +4,7 @@ export const projects = {
         Vicrea: {
             image: Vicrea,
             textColor: 'white',
-            tags: ['HTML', 'CSS', 'JavaScript', 'Gulp'],
+            tags: ['Gulp'],
             description: 'lorem test lalalal allalals sdks a hoie soa;',
         },
         Indivirtual: {
