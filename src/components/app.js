@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Introduction from './pages/introduction/introduction';
+import Project from './pages/project/project';
 import Error from './pages/error';
 import Contact from './pages/contact';
 
@@ -12,6 +13,7 @@ export default function App() {
                 <Router>
                     <Switch>
                         <Route exact path="/" component={Introduction} />
+                        <Route exact path="/project" component={Project} />
                         <Route path="*" component={Error} />
                     </Switch>
                 </Router>
