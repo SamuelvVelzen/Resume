@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { ThemeContext } from '../../logics/theme-context';
-import Card from './../shared/card';
+import { ThemeContext } from '../../../../logics/theme-context';
+import Card from '../../../shared/card';
 
-import './../../styles/style/components/pages/project.scss';
+import './../../../../styles/style/components/pages/project.scss';
 
-import Pill from '../shared/pill';
+import Pill from '../../../shared/pill';
 
-import { projects, requiredKeys, allowedColors } from '../../config/projects';
-import { checkCard } from '../../logics/filter';
+import {
+    projects,
+    requiredKeys,
+    allowedColors,
+} from '../../../../config/projects';
+import { checkCard } from '../../../../logics/filter';
 import { useHistory } from 'react-router-dom';
 
 function checkRequired(obj, tagsObj) {

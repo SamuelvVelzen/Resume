@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Introduction from './pages/introduction';
+import Introduction from './pages/introduction/introduction';
 import Error from './pages/error';
 import Contact from './pages/contact';
 

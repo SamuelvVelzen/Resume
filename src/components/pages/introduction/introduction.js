@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Navbar from './../shared/navbar';
-import Hero from './hero';
-import USPS from './usps';
-import Project from './projects';
+import Navbar from './../../shared/navbar';
+import Hero from './components/hero';
+import USPS from './components/usps';
+import Project from './components/projects';
 
 export default function App() {
     return (
