@@ -11,6 +11,7 @@ import {
     requiredKeys,
     allowedColors,
 } from '../../../../config/projects';
+
 import { checkCard } from '../../../../logics/filter';
 import { useHistory } from 'react-router-dom';
 
@@ -331,7 +332,7 @@ export default function Project() {
     openCard = (event) => {
         let card = checkCard(event);
 
-        history.push('/projects?' + card);
+        history.push('/project?name=' + card);
     };
 
     //1. filter
