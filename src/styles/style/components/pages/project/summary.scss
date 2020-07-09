@@ -1,0 +1,33 @@
+@import './../../../utilities/variables.scss';
+
+.summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    padding: 50px $desktop_spacing;
+
+    .title {
+        grid-row: 1/3;
+    }
+
+    .assignment {
+        align-self: end;
+    }
+
+    .description {
+        grid-column: 2/3;
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    .summary {
+        padding: 50px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .summary {
+        padding: 50px $mobile_spacing;
+    }
+}

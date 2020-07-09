@@ -1,0 +1,43 @@
+@import './../../../utilities/variables.scss';
+
+.textcontent {
+    display: flex;
+    flex-wrap: wrap;
+
+    padding: 50px $desktop_spacing;
+
+    .title {
+        width: 100%;
+    }
+
+    .content {
+        width: 48%;
+
+        &:first-of-type {
+            margin-right: 4%;
+        }
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    .textcontent {
+        padding: 50px $tablet_spacing;
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .textcontent {
+        padding: 50px $mobile_spacing;
+
+        flex-direction: column;
+
+        .content {
+            width: 100%;
+            margin: 0;
+
+            &:first-of-type {
+                margin-bottom: 4%;
+            }
+        }
+    }
+}
