@@ -11,7 +11,7 @@ export const themes = {
     dark: {
         style: 'dark',
         primary: '#2D7359',
-        secondary: '#B1D9B0',
+        secondary: '#2D7359',
         white: '#fff',
         black: '#fff',
     },
