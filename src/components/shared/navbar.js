@@ -3,8 +3,11 @@ import { ThemeContext } from '../../logics/theme-context';
 
 import './../../styles/style/components/shared/navbar.scss';
 import ThemeButton from './buttons';
+import { useHistory } from 'react-router-dom';
 
 export default function Navbar(props) {
+    const history = useHistory();
+
     const navLinks = (theme) => {
         const menuItems = Object.keys(props.links),
             items = [];
@@ -51,6 +54,9 @@ export default function Navbar(props) {
                         className="description bold"
                         style={{
                             color: theme.style === 'dark' ? theme.white : null,
+                        }}
+                        onClick={() => {
+                            history.push('/');
                         }}
                     >
                         Samuel.
