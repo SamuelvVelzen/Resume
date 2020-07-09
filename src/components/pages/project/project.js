@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { projects } from './../../../config/projects';
 
 import Navbar from './../../shared/navbar';
-import BigImage from './components/bigimage';
+import { BigImage } from './components/bigimage';
 import SmallImage from './components/smallimage';
 import Summary from './components/summary';
-import TextContent from './components/textcontent';
+import { TextContent } from './components/textcontent';
 import Banner from './components/banner';
+import { scrollToRef } from '../../../logics/navigation';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -18,9 +19,27 @@ export default function Project() {
         company = query.get('name'),
         project = projects[company];
 
+    //references
+    const result = useRef(null),
+        content = useRef(null);
+
+    const generateLinks = () => {
+        const menuLinks = {};
+
+        menuLinks['Results'] = {
+            ref: result,
+        };
+
+        menuLinks[project.content.title] = {
+            ref: content,
+        };
+
+        return menuLinks;
+    };
+
     return (
         <>
-            <Navbar />
+            <Navbar links={generateLinks()} action={scrollToRef} />
             <Banner
                 banner={project.image}
                 title={project.assignment}
@@ -30,6 +49,7 @@ export default function Project() {
             <Summary title={project.assignment} desc={project.description} />
 
             <TextContent
+                ref={content}
                 title={project.content.title}
                 left={{
                     title: project.content.left.title,
@@ -40,7 +60,7 @@ export default function Project() {
                     content: project.content.right.text,
                 }}
             />
-            <BigImage alt={company} img={project.image} />
+            <BigImage ref={result} alt={company} img={project.image} />
             <SmallImage alt={company} img={project.image} />
         </>
     );

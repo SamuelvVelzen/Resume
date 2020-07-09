@@ -55,7 +55,7 @@ function checkRequired(obj, tagsObj) {
     }
 }
 
-export default function Project() {
+export const Project = React.forwardRef((props, ref) => {
     console.log('project');
     const history = useHistory();
 
@@ -344,7 +344,7 @@ export default function Project() {
     const tagsObj = calculateTags(filter);
 
     //3. check if info is correct: enough colors, description not too big or if all required tags are present
-    checkRequired(projects, tagsObj);
+    // checkRequired(projects, tagsObj);
 
     //4.generate pills
     const [pills, setPills] = useState(calculatePills(tagsObj));
@@ -359,6 +359,7 @@ export default function Project() {
             {({ theme, toggleTheme }) => (
                 <article
                     id="project"
+                    ref={ref}
                     style={{
                         backgroundColor: theme.primary,
                     }}
@@ -383,4 +384,4 @@ export default function Project() {
             )}
         </ThemeContext.Consumer>
     );
-}
+});
