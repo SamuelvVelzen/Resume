@@ -48,7 +48,7 @@ export default function Card(props) {
     const tags = generateTags(props.tags, props.tagsObj);
 
     return (
-        <div className="card">
+        <div id={props.title} className="card">
             <img
                 className="card_image"
                 src={props.img}

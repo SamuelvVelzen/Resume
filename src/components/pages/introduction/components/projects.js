@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { ThemeContext } from '../../logics/theme-context';
-import Card from './../shared/card';
+import { ThemeContext } from '../../../../logics/theme-context';
+import Card from '../../../shared/card';
 
-import './../../styles/style/components/pages/project.scss';
+import './../../../../styles/style/components/pages/project.scss';
 
-import Pill from '../shared/pill';
+import Pill from '../../../shared/pill';
 
-import { projects, requiredKeys, allowedColors } from './../../config/projects';
-// import { } from './../../logics/filter';
+import {
+    projects,
+    requiredKeys,
+    allowedColors,
+} from '../../../../config/projects';
+
+import { checkCard } from '../../../../logics/filter';
+import { useHistory } from 'react-router-dom';
 
 function checkRequired(obj, tagsObj) {
     const total = Object.keys(tagsObj).length,
@@ -51,13 +57,16 @@ function checkRequired(obj, tagsObj) {
 
 export default function Project() {
     console.log('project');
+    const history = useHistory();
+
     //functions
     let filterCards,
         calculatePills,
         calculateTags,
         calculateCards,
         checkFilter,
-        checkTags;
+        checkTags,
+        openCard;
 
     calculateTags = (filter = []) => {
         let tagsObjUnSort = {},
@@ -320,6 +329,14 @@ export default function Project() {
         }
     };
 
+    openCard = (event) => {
+        let card = checkCard(event);
+
+        if (card) {
+            history.push('/project?name=' + card);
+        }
+    };
+
     //1. filter
     const [filter, setFilter] = useState([]);
 
@@ -359,7 +376,9 @@ export default function Project() {
                         {pills}
                     </div>
 
-                    <div className="cardsGroup">{cards}</div>
+                    <div className="cardsGroup" onClick={openCard}>
+                        {cards}
+                    </div>
                 </article>
             )}
         </ThemeContext.Consumer>

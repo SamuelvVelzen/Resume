@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeContext } from '../../logics/theme-context';
+import { ThemeContext } from '../../../../logics/theme-context';
 
-import './../../styles/style/components/pages/hero.scss';
-import HeroImage from './../../styles/images/content/hero.png';
+import './../../../../styles/style/components/pages/hero.scss';
+import HeroImage from './../../../../styles/images/content/hero.png';
 
 export default function Hero() {
     const [index, setIndex] = useState(0),

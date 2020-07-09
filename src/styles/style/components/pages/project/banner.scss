@@ -1,0 +1,69 @@
+@import './../../../utilities/variables.scss';
+
+.banner {
+    position: relative;
+    width: 100%;
+
+    .content {
+        width: calc(100% - $desktop_spacing);
+        color: white;
+
+        &:first-child {
+            position: absolute;
+            z-index: 5;
+            left: $desktop_spacing;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        &.imgbanner {
+            display: block;
+
+            z-index: 2;
+            width: 100%;
+            height: 500px;
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        .pillsgroup {
+            display: flex;
+
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: $tablet) {
+    .banner {
+        position: relative;
+
+        .content {
+            width: calc(100% - $tablet_spacing);
+
+            &:first-child {
+                position: absolute;
+                z-index: 5;
+                left: $tablet_spacing;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile) {
+    .banner {
+        position: relative;
+
+        .content {
+            width: calc(100% - $mobile_spacing);
+
+            &:first-child {
+                position: absolute;
+                z-index: 5;
+                left: $mobile_spacing;
+            }
+        }
+    }
+}

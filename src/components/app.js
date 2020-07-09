@@ -1,21 +1,27 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Navbar from './shared/navbar';
-import Hero from './pages/hero';
-import USPS from './pages/usps';
-import Project from './pages/project';
+import Introduction from './pages/introduction/introduction';
+import Project from './pages/project/project';
+import Error from './pages/error';
 import Contact from './pages/contact';
 
 export default function App() {
-    return [
-        <div className="content" key="content">
-            <Navbar />
-            <Hero />
-            <USPS />
-            <Project />
-        </div>,
-        <div className="footer" key="footer">
-            <Contact />
-        </div>,
-    ];
+    return (
+        <>
+            <div className="content" key="content">
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={Introduction} />
+                        <Route exact path="/project" component={Project} />
+                        <Route path="*" component={Error} />
+                    </Switch>
+                </Router>
+            </div>
+
+            <div className="footer" key="footer">
+                <Contact />
+            </div>
+        </>
+    );
 }

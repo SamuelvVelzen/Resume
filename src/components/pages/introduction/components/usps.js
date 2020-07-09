@@ -1,7 +1,7 @@
 import React from 'react';
-import { ThemeContext } from '../../logics/theme-context';
+import { ThemeContext } from '../../../../logics/theme-context';
 
-import './../../styles/style/components/pages/usps.scss';
+import './../../../../styles/style/components/pages/usps.scss';
 
 export default function USPS() {
     return (
