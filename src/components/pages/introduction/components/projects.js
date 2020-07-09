@@ -332,7 +332,9 @@ export default function Project() {
     openCard = (event) => {
         let card = checkCard(event);
 
-        history.push('/project?name=' + card);
+        if (card) {
+            history.push('/project?name=' + card);
+        }
     };
 
     //1. filter
