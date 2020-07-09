@@ -4,11 +4,44 @@ import { ThemeContext } from '../../logics/theme-context';
 import './../../styles/style/components/shared/navbar.scss';
 import ThemeButton from './buttons';
 
-export default function Navbar() {
+export default function Navbar(props) {
+    const navLinks = (theme) => {
+        const menuItems = Object.keys(props.links),
+            items = [];
+
+        menuItems.forEach((element) => {
+            items.push(
+                <button
+                    key={element}
+                    className="btn btn_link"
+                    onClick={() => {
+                        props.action(props.links[element].ref);
+                    }}
+                    style={{
+                        backgroundColor: theme.primary,
+                        color: theme.style === 'dark' ? theme.white : null,
+                    }}
+                >
+                    <span
+                        className={
+                            theme.style === 'dark'
+                                ? 'hover inline ' + theme.style
+                                : 'hover inline'
+                        }
+                    >
+                        {element}
+                    </span>
+                </button>
+            );
+        });
+
+        return items;
+    };
+
     return (
         <ThemeContext.Consumer>
             {({ theme, toggleTheme }) => (
-                <div
+                <nav
                     id="navbar"
                     style={{
                         backgroundColor: theme.primary,
@@ -22,42 +55,11 @@ export default function Navbar() {
                     >
                         Samuel.
                     </p>
-                    <button
-                        className="btn btn_link"
-                        style={{
-                            backgroundColor: theme.primary,
-                            color: theme.style === 'dark' ? theme.white : null,
-                        }}
-                    >
-                        <span
-                            className={
-                                theme.style === 'dark'
-                                    ? 'hover inline ' + theme.style
-                                    : 'hover inline'
-                            }
-                        >
-                            Introduction
-                        </span>
-                    </button>
-                    <button
-                        className="btn btn_link"
-                        style={{
-                            backgroundColor: theme.primary,
-                            color: theme.style === 'dark' ? theme.white : null,
-                        }}
-                    >
-                        <span
-                            className={
-                                theme.style === 'dark'
-                                    ? 'hover inline ' + theme.style
-                                    : 'hover inline'
-                            }
-                        >
-                            Projects
-                        </span>
-                    </button>
+
+                    {navLinks(theme)}
+
                     <ThemeButton />
-                </div>
+                </nav>
             )}
         </ThemeContext.Consumer>
     );
