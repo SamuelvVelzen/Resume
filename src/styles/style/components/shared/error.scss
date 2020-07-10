@@ -1,0 +1,79 @@
+@import './../../utilities/variables.scss';
+
+#error {
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    .themebutton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .title {
+        margin-top: auto;
+        text-align: center;
+    }
+
+    .path {
+        text-decoration: underline;
+    }
+
+    .links {
+        display: block;
+        margin: 5px auto 0 auto;
+    }
+
+    .contact {
+        font-weight: bold;
+
+        margin-top: auto;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        margin-bottom: 50px;
+        animation: down 0.5s infinite 2s alternate;
+
+        svg {
+            height: 50px;
+            width: 50px;
+
+            &.dark path {
+                fill: $black;
+            }
+
+            &.white path {
+                fill: $white;
+            }
+        }
+    }
+}
+
+@keyframes down {
+    0% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+@-webkit-keyframes down {
+    0% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
